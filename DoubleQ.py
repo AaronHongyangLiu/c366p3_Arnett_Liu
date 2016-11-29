@@ -1,4 +1,4 @@
-import blackjack
+import mountaincar
 from pylab import *
 
 Q1 = 0.00001*rand(181, 2)  # NumPy array of correct size
@@ -11,8 +11,8 @@ def learn(alpha, eps, numTrainingEpisodes):
     returnSum = 0.0
     for episodeNum in range(numTrainingEpisodes):
         G = 0
-        S = blackjack.init()
-        R, S = blackjack.sample(S, 1)
+        S = mountaincar.init()
+        R, S = mountaincar.sample(S, 1)
         G += R
         while (S):
             Q = Q1[S,:]+Q2[S,:]
@@ -24,7 +24,7 @@ def learn(alpha, eps, numTrainingEpisodes):
                 # greedy
                 A = Q.argmax()
 
-            R, S_prime = blackjack.sample(S, A)
+            R, S_prime = mountaincar.sample(S, A)
             G += R
             S_prime = int(S_prime)
 
@@ -45,13 +45,13 @@ def evaluate(numEvaluationEpisodes):
     returnSum = 0.0
     for episodeNum in range(numEvaluationEpisodes):
         G = 0
-        S = blackjack.init()
-        R, S = blackjack.sample(S, 1)
+        S = mountaincar.init()
+        R, S = mountaincar.sample(S, 1)
         G += R
         while (S):
             Q = Q1[S,:]+Q2[S,:]
             A = Q.argmax()
-            R, S = blackjack.sample(S,A)
+            R, S = mountaincar.sample(S,A)
             G += R
 
         returnSum = returnSum + G
@@ -65,4 +65,3 @@ learn(0.001,1,1000000)
 
 learn(0.001,0.01,1000000)
 
-#blackjack.printPolicy(policy)
