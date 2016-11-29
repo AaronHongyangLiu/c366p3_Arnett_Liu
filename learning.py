@@ -21,25 +21,26 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=2):
             q1 = qVal(theta1, indexList + numTiles) + qVal(theta2, indexList + numTiles)
             q2 = qVal(theta1, indexList + 2 * numTiles) + qVal(theta2, indexList + 2 * numTiles)
             Q = np.array([q0, q1, q2])
-            prob1 = np.random.random()
 
+            prob1 = np.random.random()
             if prob1 < epsilon:
                 # explore
                 A = np.random.choice([0, 1, 2])
-
             else:
                 # greedy
                 A = Q.argmax()
 
             R, S_prime = mountaincar.sample(S, A)
+            print(S_prime)
             G += R
 
             prob2 = np.random.choice([1, 2])
             if prob2 == 1:
                 theta_n = theta1
+                theta_prime = theta2
             else:
                 theta_n = theta2
-
+                theta_prime = theta1
             indexList = [x + A * numTiles for x in indexList]
             qval_theta_n = qVal(theta_n, indexList)
             if not S_prime:
@@ -49,9 +50,9 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=2):
 
             indexList_prime = np.array([-1] * 4)
 
-            q0_prime = qVal(theta_n, indexList_prime)
-            q1_prime = qVal(theta_n, indexList_prime + numTiles)
-            q2_prime = qVal(theta_n, indexList_prime + 2 * numTiles)
+            q0_prime = qVal(theta_prime, indexList_prime)
+            q1_prime = qVal(theta_prime, indexList_prime + numTiles)
+            q2_prime = qVal(theta_prime, indexList_prime + 2 * numTiles)
             q_prime_max = max([q0_prime, q1_prime, q2_prime])
 
             for index in indexList:
