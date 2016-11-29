@@ -1,14 +1,16 @@
 numTilings = 4
 numTiles = 4 * 9 * 9
+
+
 def tilecode(in1, in2, tileIndices):
     # write your tilecoder here (5 lines or so)
 
-    widthOfTile = (0.5+1.2) / 8
-    heightOfTile = (0.07+0.07) / 8
+    widthOfTile = (0.5 + 1.2) / 8
+    heightOfTile = (0.07 + 0.07) / 8
     for i in range(len(tileIndices)):
         firstTile = i * 9 * 9
-        deltaIn1 = int(((in1+1.2) + i * ( widthOfTile / numTilings)) / widthOfTile)
-        deltaIn2 = int(((in2+0.07) + i * ( heightOfTile / numTilings)) / heightOfTile)
+        deltaIn1 = int(((in1 + 1.2) + i * (widthOfTile / numTilings)) / widthOfTile)
+        deltaIn2 = int(((in2 + 0.07) + i * (heightOfTile / numTilings)) / heightOfTile)
         tileIndices[i] = int(firstTile + deltaIn1 + 9 * deltaIn2)
 
 
