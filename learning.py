@@ -6,7 +6,7 @@ numRuns = 1
 n = numTiles * 3
 
 
-def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=2):
+def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=200):
     theta1 = -0.001 * rand(n)
     theta2 = -0.001 * rand(n)
     returnSum = 0.0
@@ -26,13 +26,13 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=2):
             if prob1 < epsilon:
                 # explore
                 A = np.random.choice([0, 1, 2])
+                print("hfkjashdkjahkfjhsakhkkfshajhdkjashfkhask")
             else:
                 # greedy
                 A = Q.argmax()
 
 
             R, S_prime = mountaincar.sample(S, A)
-            print(A, S_prime[1])
             G += R
 
             prob2 = np.random.choice([1, 2])
@@ -44,17 +44,21 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=2):
                 theta_prime = theta1
             indexList = [x + A * numTiles for x in indexList]
             qval_theta_n = qVal(theta_n, indexList)
+
             if not S_prime:
                 for index in indexList:
                     theta_n[index] = theta_n[index] + alpha * (R - qval_theta_n)
                 break
 
-            indexList_prime = np.array([-1] * 4)
+            indexList_prime = [-1] * 4
+            tilecode(S_prime[0], S_prime[1], indexList_prime)
+            indexList_prime = np.array(indexList_prime)
 
-            q0_prime = qVal(theta_prime, indexList_prime)
-            q1_prime = qVal(theta_prime, indexList_prime + numTiles)
-            q2_prime = qVal(theta_prime, indexList_prime + 2 * numTiles)
-            q_prime_max = max([q0_prime, q1_prime, q2_prime])
+            q0_n = qVal(theta_n, indexList_prime)
+            q1_n = qVal(theta_n, indexList_prime + numTiles)
+            q2_n = qVal(theta_n, indexList_prime + 2 * numTiles)
+            A_prime = np.array([q0_n, q1_n, q2_n]).argmax()
+            q_prime_max = qVal(theta_prime, A_prime * numTiles + indexList_prime)
 
             for index in indexList:
                 theta_n[index] = theta_n[index] + alpha * (R + q_prime_max - qval_theta_n)
