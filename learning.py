@@ -30,8 +30,9 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=2):
                 # greedy
                 A = Q.argmax()
 
+
             R, S_prime = mountaincar.sample(S, A)
-            print(S_prime)
+            print(A, S_prime[1])
             G += R
 
             prob2 = np.random.choice([1, 2])
