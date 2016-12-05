@@ -27,7 +27,6 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=200):
             if prob1 < epsilon:
                 # explore
                 A = np.random.choice([0, 1, 2])
-                print("hfkjashdkjahkfjhsakhkkfshajhdkjashfkhask")
             else:
                 # greedy
                 A = Q.argmax()
@@ -67,9 +66,9 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=200):
             S = S_prime
             step += 1
 
-        print("Episode: ", episodeNum, "Steps:", step, "Return: ", G)
+        # print("Episode: ", episodeNum, "Steps:", step, "Return: ", G)
         returnSum = returnSum + G
-    print("Average return:", returnSum / numEpisodes)
+    # print("Average return:", returnSum / numEpisodes)
     return returnSum, theta1, theta2
 
 
@@ -108,5 +107,5 @@ if __name__ == '__main__':
         returnSum, theta1, theta2 = learn()
         runSum += returnSum
 
-    print("Overall performance: Average sum of return per run:", end="")
-    print(runSum / numRuns)
+    # print("Overall performance: Average sum of return per run:", end="")
+    # print(runSum / numRuns)

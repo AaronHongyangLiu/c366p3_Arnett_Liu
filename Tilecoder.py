@@ -17,7 +17,7 @@ def tilecode(in1, in2, tileIndices):
 def printTileCoderIndices(in1, in2):
     tileIndices = [-1] * numTilings
     tilecode(in1, in2, tileIndices)
-    print('Tile indices for input (', in1, ',', in2, ') are : ', tileIndices)
+    # print('Tile indices for input (', in1, ',', in2, ') are : ', tileIndices)
 
 if __name__ == '__main__':
     printTileCoderIndices(-1.2, -0.07)
