@@ -13,6 +13,7 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=200):
     for episodeNum in range(numEpisodes):
         G = 0
         S = mountaincar.init()
+        step = 0
         while (S):
             indexList = [-1] * numTilings
             tilecode(S[0], S[1], indexList)
@@ -64,6 +65,7 @@ def learn(alpha=.1 / numTilings, epsilon=0, numEpisodes=200):
                 theta_n[index] = theta_n[index] + alpha * (R + q_prime_max - qval_theta_n)
 
             S = S_prime
+            step += 1
 
         print("Episode: ", episodeNum, "Steps:", step, "Return: ", G)
         returnSum = returnSum + G
@@ -79,7 +81,6 @@ def qVal(theta, tileIndices):
         sum1 += theta[index]
     return sum1
 
-
 # You will first need to add an array in which to collect the data
 
 def writeF(theta1, theta2):
@@ -87,16 +88,25 @@ def writeF(theta1, theta2):
     steps = 50
     for i in range(steps):
         for j in range(steps):
-            F = tilecode(-1.2 + i * 1.7 / steps, -0.07 + j * 0.14 / steps)
-            height = -max(Qs(F, theta1, theta2))
+            F = [-1] * numTilings
+            tilecode(-1.2 + (i * 1.7 / steps), -0.07 + (j * 0.14 / steps), F)
+            height = -max(Qs(F, theta1 + theta2 / 2))
             fout.write(repr(height) + ' ')
         fout.write('\n')
     fout.close()
 
+def Qs(tileIndices, theta):
+    tileIndices = np.array(tileIndices)
+    q0 = qVal(theta, tileIndices)
+    q1 = qVal(theta, tileIndices + 1 * numTiles)
+    q2 = qVal(theta, tileIndices + 2 * numTiles)
+    return [q0,q1,q2]
 
 if __name__ == '__main__':
     runSum = 0.0
     for run in range(numRuns):
         returnSum, theta1, theta2 = learn()
         runSum += returnSum
-    print("Overall performance: Average sum of return per run:", runSum / numRuns)
+
+    print("Overall performance: Average sum of return per run:", end="")
+    print(runSum / numRuns)

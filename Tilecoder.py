@@ -19,7 +19,10 @@ def printTileCoderIndices(in1, in2):
     tilecode(in1, in2, tileIndices)
     print('Tile indices for input (', in1, ',', in2, ') are : ', tileIndices)
 
-# printTileCoderIndices(0.49,0.069)
-# printTileCoderIndices(4.0,2.0)
-# printTileCoderIndices(5.99,5.99)
-# printTileCoderIndices(4.0,2.1)
+if __name__ == '__main__':
+    printTileCoderIndices(-1.2, -0.07)
+    printTileCoderIndices(-1.2, 0.07)
+    printTileCoderIndices(0.5, -0.07)
+    printTileCoderIndices(0.5, 0.07)
+    printTileCoderIndices(-0.35, 0.0)
+    printTileCoderIndices(0.0, 0.0)
